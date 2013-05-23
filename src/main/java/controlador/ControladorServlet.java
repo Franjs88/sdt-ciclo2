@@ -23,8 +23,8 @@ public class ControladorServlet extends HttpServlet {
 
     @EJB
     FachadaDeSesion ejb;
-    Taxi taxiOptimo;
-    Solicitud solicitud;
+//    Taxi taxiOptimo;
+//    Solicitud solicitud;
 
     /**
      * Processes requests for both HTTP
@@ -51,10 +51,10 @@ public class ControladorServlet extends HttpServlet {
             String telefono = request.getParameter("Telefono");
             //Insertar solicitud en la base de datos
             Integer id = ejb.insertarSolicitud(nombre, direccion, telefono);
-            solicitud.setIdSolicitud(id);
-            solicitud.setNombreCliente(nombre);
-            solicitud.setDireccionDestino(direccion);
-            solicitud.setTelefono(telefono);
+//            solicitud.setIdSolicitud(id);
+//            solicitud.setNombreCliente(nombre);
+//            solicitud.setDireccionDestino(direccion);
+//            solicitud.setTelefono(telefono);
             //solicitud = new Solicitud(nombre, direccion, telefono, "24/04/2013");
             //Obtener Taxi para la solicitud
             Integer idTaxi = ejb.obtenerTaxi();//Parametro idSolicitud
@@ -88,7 +88,7 @@ public class ControladorServlet extends HttpServlet {
         } else if (peticion.equals("infoTaxi")) {
             
             Integer idTaxi = Integer.parseInt(request.getParameter("id"));
-            String direccion = request.getParameter("direccion");
+//            String direccion = request.getParameter("direccion");
             Taxi taxi = ejb.consultaInfoTaxi(idTaxi);
             request.setAttribute("taxi", taxi);
             
