@@ -19,11 +19,12 @@ public class FachadaDeSesion {
 
     @PersistenceContext
     EntityManager em;
+
     public List<Integer> consultaListaTaxis() {
         //Devuelve la lista de identificadores de los taxis de la BBDD
         return (List<Integer>) em.createNamedQuery("Taxi.findAllByNumBastidor").getResultList();
     }
-    
+
     public String consultaEstadoTaxi(Integer idTaxi) {
         //Devuelve el estado del taxi
         return (String) em.createNamedQuery("Taxi.findEstadoByNumBastidor").
@@ -36,12 +37,13 @@ public class FachadaDeSesion {
                 setParameter("numBastidor", idTaxi).getSingleResult();
     }
 
-    public Integer insertarSolicitud(String nombre, String direccion, String telefono) {
+    public Solicitud insertarSolicitud(String nombre, String direccion, String telefono) {
         //Inserta la solicitud en la BBDD
         Date fecha = new Date();
         Solicitud solicitud = new Solicitud(nombre, direccion, telefono, fecha.toString());
         em.persist(solicitud);
-        return solicitud.getIdSolicitud();
+        
+        return solicitud;
     }
 
     public Integer obtenerTaxi() {
@@ -60,10 +62,8 @@ public class FachadaDeSesion {
         boolean libre;
         int i;
 
-        //En caso de que no tenga ningun taxi en la BBDD
-        if (numTaxis == 0) {
-            //Aqui no se hace nada?
-        } else if (numSolicitudes == 0) {
+        //En caso de que haya algun taxi en la BBDD
+        if ((numTaxis > 0) && (numSolicitudes == 0)) {
             //Si aun no se ha antendido ninguna solicitud devuelve el primer taxi libre
             i = 0;
             libre = false;
@@ -75,8 +75,12 @@ public class FachadaDeSesion {
                     i++;
                 }
             }
+            //En caso de que no encuentre ningun taxi disponible
+            if (libre == false) {
+                taxiCandidato = null;
+            }
 
-        } else {
+        } else if ((numTaxis > 0) && (numSolicitudes > 0)) {
             //Genera una lista ordenada por el tiempo de espera de los taxis
             ArrayList<Integer> taxisCandidatos = new ArrayList<Integer>();
             taxisCandidatos = generarCandidatos(numTaxis, listaSolicitudes, taxisCandidatos);
@@ -120,9 +124,8 @@ public class FachadaDeSesion {
         Taxi taxi = (Taxi) em.createNamedQuery("Taxi.findByNumBastidor").setParameter("numBastidor", idTaxi).getResultList().get(0);
 
         //Adigna el taxi a la solicitud
-        //solicitud.setTaxiNumBastidor(taxi);
+        solicitud.setTaxiNumBastidor(taxi);
 
-        em.lock(solicitud, LockModeType.NONE);
         //Actualiza la BBD
         em.persist(solicitud);
 
