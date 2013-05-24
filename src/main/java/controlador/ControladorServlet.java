@@ -23,9 +23,19 @@ public class ControladorServlet extends HttpServlet {
 
     @EJB
     private FachadaDeSesion ejb;
-    private static boolean conectado = true;
+    private boolean conectado;
     private Taxi taxiOptimo;
     private Solicitud solicitud;
+    
+    /**
+     * Constructor del Controlador
+     * Revisar si funciona al ejecutar la aplicación.
+     */
+    public ControladorServlet() {
+        this.conectado = true;
+        this.taxiOptimo = new Taxi();
+        this.solicitud = new Solicitud();
+    }
 
     /**
      * Processes requests for both HTTP
@@ -144,4 +154,12 @@ public class ControladorServlet extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
+    
+    public boolean getConectado(){
+        return conectado;
+    }
+    
+    public void setConectado(boolean conectado){
+        this.conectado = conectado;
+    }
 }
