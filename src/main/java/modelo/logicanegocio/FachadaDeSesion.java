@@ -127,7 +127,8 @@ public class FachadaDeSesion {
         solicitud.setTaxiNumBastidor(taxi);
 
         //Actualiza la BBD
-        em.persist(solicitud);
+        //em.persist(solicitud);
+        em.merge(solicitud);
 
         return true;
     }
