@@ -41,7 +41,6 @@ public class ControladorServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         String peticion = request.getParameter("solicitud");
 
-
         //Sección para insertar una solicitud
         if (peticion.equals("crearSolicitud")) {
 
@@ -64,7 +63,7 @@ public class ControladorServlet extends HttpServlet {
             dispatcher.forward(request, response);
 
             //Sección para mostrar la información de la solicitud
-        } else if (peticion.equals("mostrarMensaje")) {
+        } /*else if (peticion.equals("mostrarMensaje")) {
             //Se reciben los parámetros de la solicitud
             String nombreCliente = (String) request.getParameter("nombreCliente");
             String destino = (String) request.getParameter("destino");
@@ -80,7 +79,7 @@ public class ControladorServlet extends HttpServlet {
             dispatcher.forward(request, response);
 
             //Sección para ver la información de un taxi
-        } else if (peticion.equals("infoTaxi")) {
+        }*/ else if (peticion.equals("infoTaxi")) {
 
             Integer idTaxi = Integer.parseInt(request.getParameter("id"));
             String direccion = request.getParameter("direccion");
@@ -108,13 +107,13 @@ public class ControladorServlet extends HttpServlet {
             //se manda la información a la vista
             RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/listaTaxis.jsp");
             dispatcher.forward(request, response);
-        } else if (peticion.equals("Enviar Mensaje")) {
+        } else if (peticion.equals("enviarMensaje")) {
             //idsolicitud, idtaxi
             boolean exito = ejb.enviarMensaje(solicitud, taxiOptimo.getNumBastidor());
             if (exito) {
                 RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/index.jsp");
                 dispatcher.forward(request, response);
-            }
+            }//else enviar a pagina para que vuelva a intentar
         }
     }
 
