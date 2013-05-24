@@ -23,8 +23,8 @@ public class ControladorServlet extends HttpServlet {
 
     @EJB
     FachadaDeSesion ejb;
-//    Taxi taxiOptimo;
-//    Solicitud solicitud;
+    Taxi taxiOptimo;
+    Solicitud solicitud;
 
     /**
      * Processes requests for both HTTP
@@ -41,33 +41,28 @@ public class ControladorServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         String peticion = request.getParameter("solicitud");
 
-        
+
         //Sección para insertar una solicitud
         if (peticion.equals("crearSolicitud")) {
-            
+
             //Se reciben los parámetros de la solicitud
             String nombre = request.getParameter("Nombre");
             String direccion = request.getParameter("Direccion");
             String telefono = request.getParameter("Telefono");
             //Insertar solicitud en la base de datos
-            Integer id = ejb.insertarSolicitud(nombre, direccion, telefono);
-//            solicitud.setIdSolicitud(id);
-//            solicitud.setNombreCliente(nombre);
-//            solicitud.setDireccionDestino(direccion);
-//            solicitud.setTelefono(telefono);
-            //solicitud = new Solicitud(nombre, direccion, telefono, "24/04/2013");
+            solicitud = ejb.insertarSolicitud(nombre, direccion, telefono);
             //Obtener Taxi para la solicitud
             Integer idTaxi = ejb.obtenerTaxi();//Parametro idSolicitud
             //Obtener información del taxi de la solicitud
             taxiOptimo = ejb.consultaInfoTaxi(idTaxi);
-            
+
             //se agregan el taxi y la solicitud al request para que lo utilize la vista taxiOptimo.jsp
             request.setAttribute("taxi", taxiOptimo);
             request.setAttribute("solicitud", solicitud);
             //se envía la información a la vista
             RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/taxiOptimo.jsp");
             dispatcher.forward(request, response);
-            
+
             //Sección para mostrar la información de la solicitud
         } else if (peticion.equals("mostrarMensaje")) {
             //Se reciben los parámetros de la solicitud
@@ -75,7 +70,7 @@ public class ControladorServlet extends HttpServlet {
             String destino = (String) request.getParameter("destino");
             String telefono = (String) request.getParameter("telefono");
             //Solicitud solicitud = new Solicitud(nombreCliente, destino, telefono, "10/10/2012");
-            
+
             //Se agregan los parámetros al request para que sean utilizados por la vista mensaje.jsp
             request.setAttribute("telefono", telefono);
             request.setAttribute("nombreCliente", nombreCliente);
@@ -83,40 +78,43 @@ public class ControladorServlet extends HttpServlet {
             //Se envía la información a la vista
             RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/mensaje.jsp");
             dispatcher.forward(request, response);
-            
+
             //Sección para ver la información de un taxi
         } else if (peticion.equals("infoTaxi")) {
-            
+
             Integer idTaxi = Integer.parseInt(request.getParameter("id"));
-//            String direccion = request.getParameter("direccion");
+            String direccion = request.getParameter("direccion");
             Taxi taxi = ejb.consultaInfoTaxi(idTaxi);
             request.setAttribute("taxi", taxi);
-            
+
             RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/infoTaxi.jsp");
             dispatcher.forward(request, response);
         } else if (peticion.equals("obtenerTaxis")) {
             //En esta sección, se obtiene la lista de todos los taxis y se envían 
             //a la vista listaTaxis.jsp
-            
+
             //Lista que contiene los taxis. Es resultado de consultaListaTaxis de la fachadaDeSesion
             List<Integer> listaTaxis = ejb.consultaListaTaxis();
             //lista que contiene la información de todos los taxis
             ArrayList<Taxi> listaInfoTaxis = new ArrayList<Taxi>();
-            for(int i = 0;i < listaTaxis.size();i++){
+            for (int i = 0; i < listaTaxis.size(); i++) {
                 //se añade a la lista la información de los taxis
                 listaInfoTaxis.add(ejb.consultaInfoTaxi(listaTaxis.get(i)));
             }
+
             //Se añaden la lista de taxis y la lista de la información de los taxis
-            request.setAttribute("infoTaxis",listaInfoTaxis);
+            request.setAttribute("infoTaxis", listaInfoTaxis);
             request.setAttribute("taxis", listaTaxis);
             //se manda la información a la vista
             RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/listaTaxis.jsp");
             dispatcher.forward(request, response);
         } else if (peticion.equals("Enviar Mensaje")) {
             //idsolicitud, idtaxi
-            //ejb.enviarMensaje(Integer.SIZE, taxiOptimo.getNumBastidor());
-            RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/index.jsp");
-            dispatcher.forward(request, response);
+            boolean exito = ejb.enviarMensaje(solicitud, taxiOptimo.getNumBastidor());
+            if (exito) {
+                RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/index.jsp");
+                dispatcher.forward(request, response);
+            }
         }
     }
 

@@ -24,6 +24,7 @@
             <div id="enlaces">
                 <ul>
                     <li><a href="generarSolicitud.jsp">Crear Solicitud</a></li>
+                    <li><a href="descargarHistorial.jsp"> | Descargar Historial</a></li>
                 </ul>
             </div>
         </div>
@@ -36,7 +37,7 @@
                 <%
                     for (int i = 0; i < taxis.size(); i++) {
                 %>
-                <tr id="<%=taxis.get(i)%>" onclick="mostrarInformacion(this.id, '<%=listaInfoTaxis.get(i).getUbicacion()%>');">
+                <tr id="<%=taxis.get(i)%>" title="<%=listaInfoTaxis.get(i).getEstado()%>" onclick="mostrarInformacion(this.id, '<%=listaInfoTaxis.get(i).getUbicacion()%>');">
                     <td><img src="http://static6.depositphotos.com/1070259/561/v/950/depositphotos_5613932-Button-taxi.jpg" height="150px" width="150px"/></td>
                     <td style="text-align:center;font-size:larger;"><%=taxis.get(i)%></td>
                 </tr>
