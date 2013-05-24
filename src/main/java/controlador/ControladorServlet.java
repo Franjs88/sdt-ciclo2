@@ -22,9 +22,10 @@ import modelo.logicanegocio.FachadaDeSesion;
 public class ControladorServlet extends HttpServlet {
 
     @EJB
-    FachadaDeSesion ejb;
-    Taxi taxiOptimo;
-    Solicitud solicitud;
+    private FachadaDeSesion ejb;
+    private static boolean conectado = true;
+    private Taxi taxiOptimo;
+    private Solicitud solicitud;
 
     /**
      * Processes requests for both HTTP
@@ -41,8 +42,8 @@ public class ControladorServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         String peticion = request.getParameter("solicitud");
 
-        //Sección para insertar una solicitud
-        if (peticion.equals("crearSolicitud")) {
+        //Si el sistema esta conectado y la petición es CrearSolicitud
+        if (conectado && peticion.equals("crearSolicitud")) {
 
             //Se reciben los parámetros de la solicitud
             String nombre = request.getParameter("Nombre");
@@ -62,32 +63,17 @@ public class ControladorServlet extends HttpServlet {
             RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/taxiOptimo.jsp");
             dispatcher.forward(request, response);
 
-            //Sección para mostrar la información de la solicitud
-        } /*else if (peticion.equals("mostrarMensaje")) {
-            //Se reciben los parámetros de la solicitud
-            String nombreCliente = (String) request.getParameter("nombreCliente");
-            String destino = (String) request.getParameter("destino");
-            String telefono = (String) request.getParameter("telefono");
-            //Solicitud solicitud = new Solicitud(nombreCliente, destino, telefono, "10/10/2012");
-
-            //Se agregan los parámetros al request para que sean utilizados por la vista mensaje.jsp
-            request.setAttribute("telefono", telefono);
-            request.setAttribute("nombreCliente", nombreCliente);
-            request.setAttribute("destino", destino);
-            //Se envía la información a la vista
-            RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/mensaje.jsp");
-            dispatcher.forward(request, response);
-
-            //Sección para ver la información de un taxi
-        }*/ else if (peticion.equals("infoTaxi")) {
+            //Sección para mostrar la información de un taxi
+        } else if (conectado && peticion.equals("infoTaxi")) {
 
             Integer idTaxi = Integer.parseInt(request.getParameter("id"));
-            String direccion = request.getParameter("direccion");
+//            String direccion = request.getParameter("direccion");
             Taxi taxi = ejb.consultaInfoTaxi(idTaxi);
             request.setAttribute("taxi", taxi);
 
             RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/infoTaxi.jsp");
             dispatcher.forward(request, response);
+
         } else if (peticion.equals("obtenerTaxis")) {
             //En esta sección, se obtiene la lista de todos los taxis y se envían 
             //a la vista listaTaxis.jsp
@@ -107,7 +93,8 @@ public class ControladorServlet extends HttpServlet {
             //se manda la información a la vista
             RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/listaTaxis.jsp");
             dispatcher.forward(request, response);
-        } else if (peticion.equals("enviarMensaje")) {
+            
+        } else if (conectado && peticion.equals("enviarMensaje")) {
             //idsolicitud, idtaxi
             boolean exito = ejb.enviarMensaje(solicitud, taxiOptimo.getNumBastidor());
             if (exito) {

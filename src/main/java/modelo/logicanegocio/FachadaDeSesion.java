@@ -5,7 +5,6 @@ import java.util.Date;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
-import javax.persistence.LockModeType;
 import javax.persistence.PersistenceContext;
 import modelo.accesodatos.Solicitud;
 import modelo.accesodatos.Taxi;
@@ -18,11 +17,13 @@ import modelo.accesodatos.Taxi;
 public class FachadaDeSesion {
 
     @PersistenceContext
-    EntityManager em;
+    private EntityManager em;
 
     public List<Integer> consultaListaTaxis() {
+        List<Integer> listaTaxis;
         //Devuelve la lista de identificadores de los taxis de la BBDD
-        return (List<Integer>) em.createNamedQuery("Taxi.findAllByNumBastidor").getResultList();
+            listaTaxis = (List<Integer>) em.createNamedQuery("Taxi.findAllByNumBastidor").getResultList();
+        return listaTaxis;
     }
 
     public String consultaEstadoTaxi(Integer idTaxi) {
