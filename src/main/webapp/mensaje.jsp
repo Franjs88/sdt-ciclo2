@@ -40,11 +40,10 @@
             <h1>Direcci&oacute;n: <%=destino%></h1>
 
             <form action="ControladorServlet">
-                <input type="submit" onclick="alert('Envio el mensaje');" name="solicitud" value="Enviar Mensaje"/>
+                <input type="submit" onclick="alert('Envio el mensaje');" name="solicitud" value="enviarMensaje"/>
                 <input type="hidden" name="nombreCliente" value="<%=nombreCliente%>"/>
                 <input type="hidden" name="destino" value="<%=destino%>"/>
                 <input type="hidden" name="telefono" value="<%=telefono%>"/>
-                <input type="hidden" name="solicitud" value="mostrarMensaje">
             </form>
         </div>
         <div id="map_canvas">

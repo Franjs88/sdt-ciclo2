@@ -9,9 +9,21 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Index</title>
+        <title>SDT</title>
+        <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
         <script src="funciones.js"></script>
+        <link rel="stylesheet" type="text/css" href="estilo.css"/>
     </head>
-    <body onload="obtenerTaxis()">
+    <body>
+        <div id="encabezado">
+            <h1>Despacho de Taxis</h1>
+            <div id="enlaces">
+                <ul>
+                    <li id="comolink" onclick="obtenerTaxis();">Ver Taxis |</li>
+                    <li><a href="generarSolicitud.jsp">Crear Solicitud</a></li>
+                    <li><a href="descargarHistorial.jsp"> | Descargar Historial</a></li>
+                </ul>
+            </div>
+        </div>
     </body>
 </html>

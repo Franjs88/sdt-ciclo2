@@ -1,10 +1,7 @@
-
 function mostrarInformacion(id, direccion) {
     window.location.href = "ControladorServlet?solicitud=infoTaxi&id=" + id + "&direccion=" + direccion;
 }
-function hover(id) {
-    alert("(hover) Mi id es: " + id);
-}
+
 function obtenerTaxis(){
     window.location.href = "ControladorServlet?solicitud=obtenerTaxis";
 }

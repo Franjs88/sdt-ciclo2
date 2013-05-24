@@ -25,5 +25,10 @@
                 </ul>
             </div>
         </div>
+        <div id="forma">
+            <form action="ControladorServlet">
+                <input type="submit" value="Descargar Historial" name="solicitud"/>
+            </form>
+        </div>
     </body>
 </html>

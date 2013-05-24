@@ -32,19 +32,22 @@
             </div>
         </div>
 
-        <form action="ControladorServlet">
-            <input type="hidden" name="nombreCliente" value="<%=solicitud.getNombreCliente()%>"/>
-            <input type="hidden" name="destino" value="<%=solicitud.getDireccionDestino()%>"/>
-            <input type="hidden" name="telefono" value="<%=solicitud.getTelefono()%>"/>
-            <input type="hidden" name="solicitud" value="mostrarMensaje">
-        </form>
+        
 
         <div id="taxiOptimo">
             <h1>Taxi &Oacute;ptimo</h1>
-            <h1><a onclick="document.forms[0].submit();" style="color:black; text-decoration: underline;">N&uacute;mero bastidor: <%=taxi.getNumBastidor()%></a></h1>
+            <h1>N&uacute;mero bastidor: <%=taxi.getNumBastidor()%></h1>
             <h1>Ubicaci&oacute;n Actual: <%=taxi.getUbicacion()%></h1>
+            <form action="ControladorServlet">
+            <input type="hidden" name="nombreCliente" value="<%=solicitud.getNombreCliente()%>"/>
+            <input type="hidden" name="destino" value="<%=solicitud.getDireccionDestino()%>"/>
+            <input type="hidden" name="telefono" value="<%=solicitud.getTelefono()%>"/>
+            <input type="submit" name="solicitud" onclick="alert('Envio el mensaje');" value="enviarMensaje">
+        </form>
         </div>
 
+        
+        
         <div id="map_canvas">
         </div>
     </body>

@@ -67,6 +67,15 @@ a:hover   {
 a:active  {
     color:yellow;
 }
+#comolink{
+    color:white;
+}
+#comolink:hover{
+    color:yellow;
+}
+#comolink:active  {
+    color:yellow;
+}
 #map_canvas {
      top:160px;
      left:50%;
