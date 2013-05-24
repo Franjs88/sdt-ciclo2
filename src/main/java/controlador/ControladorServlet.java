@@ -23,7 +23,7 @@ public class ControladorServlet extends HttpServlet {
 
     @EJB
     private FachadaDeSesion ejb;
-    private boolean conectado;
+    private boolean conectado = true;
     private Taxi taxiOptimo;
     private Solicitud solicitud;
     
@@ -33,8 +33,6 @@ public class ControladorServlet extends HttpServlet {
      */
     public ControladorServlet() {
         this.conectado = true;
-        this.taxiOptimo = new Taxi();
-        this.solicitud = new Solicitud();
     }
 
     /**
