@@ -1,3 +1,15 @@
+function cambia(){
+    
+    if(document.getElementById("botonEncendido").style.background === "red"){
+        alert("Soy rojo y pase a verde");
+        document.getElementById("botonEncendido").style.background ="green";
+        window.location.href = "ControladorServlet?solicitud=estadoSistema&estado=abierto";
+    }else{
+        alert("Soy verde y pase a rojo");
+        document.getElementById("botonEncendido").style.background ="red";
+        window.location.href = "ControladorServlet?solicitud=estadoSistema&estado=bloqueado";
+    }
+}
 function mostrarInformacion(id, direccion) {
     window.location.href = "ControladorServlet?solicitud=infoTaxi&id=" + id + "&direccion=" + direccion;
 }

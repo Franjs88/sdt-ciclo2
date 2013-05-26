@@ -1,9 +1,9 @@
-<%-- 
-    Document   : index
-    Created on : May 5, 2013, 7:58:10 PM
-    Author     : andres
---%>
-
+<%
+    String estado = (String) request.getAttribute("estado");
+    if(estado == null){
+    estado = ".";
+    }
+%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -16,6 +16,22 @@
     </head>
     <body>
         <div id="encabezado">
+            <div id="botonEncendido" onclick="cambia();"></div>
+            <%
+                if(estado.equals("bloqueado")){
+                %>
+                <script>
+                    document.getElementById("botonEncendido").style.background="red";
+                </script>
+                <%
+                } else if(estado.equals("abierto")){
+                %>
+                <script>
+                    document.getElementById("botonEncendido").style.background="green";
+                </script>
+                <%
+                }
+            %>
             <h1>Despacho de Taxis</h1>
             <div id="enlaces">
                 <ul>

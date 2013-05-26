@@ -22,18 +22,16 @@ import modelo.logicanegocio.FachadaDeSesion;
 public class ControladorServlet extends HttpServlet {
 
     @EJB
-    private FachadaDeSesion ejb;
-    private boolean conectado = true;
-    private Taxi taxiOptimo;
-    private Solicitud solicitud;
+    FachadaDeSesion ejb;
+    boolean conectado = true;
+    Taxi taxiOptimo;
+    Solicitud solicitud;
     
     /**
      * Constructor del Controlador
      * Revisar si funciona al ejecutar la aplicación.
      */
-    public ControladorServlet() {
-        this.conectado = true;
-    }
+
 
     /**
      * Processes requests for both HTTP
@@ -75,7 +73,6 @@ public class ControladorServlet extends HttpServlet {
         } else if (conectado && peticion.equals("infoTaxi")) {
 
             Integer idTaxi = Integer.parseInt(request.getParameter("id"));
-//            String direccion = request.getParameter("direccion");
             Taxi taxi = ejb.consultaInfoTaxi(idTaxi);
             request.setAttribute("taxi", taxi);
 
@@ -109,6 +106,23 @@ public class ControladorServlet extends HttpServlet {
                 RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/index.jsp");
                 dispatcher.forward(request, response);
             }//else enviar a pagina para que vuelva a intentar
+        }else if(peticion.equals("estadoSistema")){
+            String estado = request.getParameter("estado");
+            if(estado.equals("bloqueado")){
+                conectado = false;
+                request.setAttribute("estado", estado);
+                RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/index.jsp");
+                dispatcher.forward(request, response);
+            }else if(estado.equals("abierto")){
+                conectado = true;
+                request.setAttribute("estado", estado);
+                RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/index.jsp");
+                dispatcher.forward(request, response);
+            }
+        }
+        else{
+            RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/index.jsp");
+            dispatcher.forward(request, response);
         }
     }
 
@@ -153,11 +167,4 @@ public class ControladorServlet extends HttpServlet {
         return "Short description";
     }// </editor-fold>
     
-    public boolean getConectado(){
-        return conectado;
-    }
-    
-    public void setConectado(boolean conectado){
-        this.conectado = conectado;
-    }
 }
