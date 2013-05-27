@@ -16,18 +16,18 @@
     </head>
     <body>
         <div id="encabezado">
-            <div id="botonEncendido" onclick="cambia();"></div>
+            <div id="botonEncendidoIndex" onclick="cambiaIndex();"></div>
             <%
                 if(estado.equals("bloqueado")){
                 %>
                 <script>
-                    document.getElementById("botonEncendido").style.background="red";
+                    document.getElementById("botonEncendidoIndex").style.background="red";
                 </script>
                 <%
                 } else if(estado.equals("abierto")){
                 %>
                 <script>
-                    document.getElementById("botonEncendido").style.background="green";
+                    document.getElementById("botonEncendidoIndex").style.background="green";
                 </script>
                 <%
                 }

@@ -26,7 +26,6 @@ public class ControladorServlet extends HttpServlet {
     private boolean conectado = true;
     private Taxi taxiOptimo;
     private Solicitud solicitud;
-
     /**
      * Constructor del Controlador Revisar si funciona al ejecutar la
      * aplicación.
@@ -134,6 +133,7 @@ public class ControladorServlet extends HttpServlet {
             dispatcher.forward(request, response);
         }
     }
+    
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**

@@ -1,11 +1,18 @@
-#botonEncendido{
-    background-color: green;
+#divFallo{
+    position:absolute;
+    top:200px;
+    left:200px;
+    text-align: center;
+}
+#botonEncendidoIndex{
+    background-color: #008000;
     width:30px;
     height:30px;
     position:absolute;
     top:40px;
     left:20px;
 }
+
 #forma{ 
     position:absolute;
     top:150px;

@@ -3,7 +3,10 @@
 <%@page import="modelo.accesodatos.Taxi"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%
-
+    String estado = (String) request.getAttribute("estado");
+    if(estado == null){
+    estado = ".";
+    }
     List<Integer> taxis = (List<Integer>) request.getAttribute("taxis");
     ArrayList<Taxi> listaInfoTaxis = (ArrayList<Taxi>) request.getAttribute("infoTaxis");
 %>
