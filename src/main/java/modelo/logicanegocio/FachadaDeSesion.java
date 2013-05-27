@@ -138,11 +138,6 @@ public class FachadaDeSesion {
     public boolean recibirConfirmacion() {
         return Math.random() < 0.5;
     }
-    
-    //Metodo para detectar errores de comunicacion
-    public String capturarErrorComunicacion() {
-        return null;
-    }
 
     //Genera la lista de los ultimos taxis que han atendido solicitudes
     private ArrayList<Integer> generarCandidatos(int numTaxis, List<Taxi> listaSolicitudes, ArrayList<Integer> taxisCandidatos) {
