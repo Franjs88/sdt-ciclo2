@@ -22,10 +22,10 @@ import modelo.logicanegocio.FachadaDeSesion;
 public class ControladorServlet extends HttpServlet {
 
     @EJB
-    FachadaDeSesion ejb;
-    boolean conectado = true;
-    Taxi taxiOptimo;
-    Solicitud solicitud;
+    private FachadaDeSesion ejb;
+    private boolean conectado = true;
+    private Taxi taxiOptimo;
+    private Solicitud solicitud;
     
     /**
      * Constructor del Controlador
@@ -125,6 +125,7 @@ public class ControladorServlet extends HttpServlet {
             dispatcher.forward(request, response);
         }
     }
+    
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
@@ -166,5 +167,37 @@ public class ControladorServlet extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
+ 
+    public FachadaDeSesion getEjb() {
+        return ejb;
+    }
+
+    public void setEjb(FachadaDeSesion ejb) {
+        this.ejb = ejb;
+    }
+
+    public boolean isConectado() {
+        return conectado;
+    }
+
+    public void setConectado(boolean conectado) {
+        this.conectado = conectado;
+    }
+
+    public Taxi getTaxiOptimo() {
+        return taxiOptimo;
+    }
+
+    public void setTaxiOptimo(Taxi taxiOptimo) {
+        this.taxiOptimo = taxiOptimo;
+    }
+
+    public Solicitud getSolicitud() {
+        return solicitud;
+    }
+
+    public void setSolicitud(Solicitud solicitud) {
+        this.solicitud = solicitud;
+    }
     
 }
