@@ -23,7 +23,7 @@ public class ControladorServlet extends HttpServlet {
 
     @EJB
     private FachadaDeSesion ejb;
-    private boolean conectado = true;
+    private static boolean conectado = true;
     private Taxi taxiOptimo;
     private Solicitud solicitud;
     /**
@@ -46,7 +46,7 @@ public class ControladorServlet extends HttpServlet {
         String peticion = request.getParameter("solicitud");
 
         //Si el sistema esta conectado y la petición es CrearSolicitud
-        if (conectado && peticion.equals("crearSolicitud")) {
+        if (conectado && peticion.equals("Crear Solicitud")) {
 
             //Se reciben los parámetros de la solicitud
             String nombre = request.getParameter("Nombre");
@@ -96,7 +96,7 @@ public class ControladorServlet extends HttpServlet {
             RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/listaTaxis.jsp");
             dispatcher.forward(request, response);
 
-        } else if (conectado && peticion.equals("enviarMensaje")) {
+        } else if (conectado && peticion.equals("Enviar Mensaje")) {
             //idsolicitud, idtaxi
             boolean exito = ejb.enviarMensaje(solicitud, taxiOptimo.getNumBastidor());
             if (exito) {
@@ -119,7 +119,7 @@ public class ControladorServlet extends HttpServlet {
                 RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/index.jsp");
                 dispatcher.forward(request, response);
             }
-        } else if (peticion.equals("VolveraIntentar")) {
+        } else if (peticion.equals("Volver a Intentar")) {
             boolean exito = ejb.enviarMensaje(solicitud, taxiOptimo.getNumBastidor());
             if (exito) {
                 RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/index.jsp");
@@ -184,12 +184,12 @@ public class ControladorServlet extends HttpServlet {
         this.ejb = ejb;
     }
 
-    public boolean isConectado() {
+    public static boolean isConectado() {
         return conectado;
     }
 
     public void setConectado(boolean conectado) {
-        this.conectado = conectado;
+        conectado = conectado;
     }
 
     public Taxi getTaxiOptimo() {

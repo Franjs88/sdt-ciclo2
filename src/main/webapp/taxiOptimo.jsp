@@ -4,6 +4,7 @@
     Author     : andres
 --%>
 
+<%@page import="controlador.ControladorServlet"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page session="true" import="java.util.*, modelo.accesodatos.Taxi, modelo.accesodatos.Solicitud" %>
 <%
@@ -24,6 +25,22 @@
     </head>
     <body onload="generarMapa('<%=taxi.getUbicacion()%>');">
         <div id="encabezado">
+            <div id="botonEncendidoIndex"></div>
+            <%
+                if(!ControladorServlet.isConectado()){
+                %>
+                <script>
+                    document.getElementById("botonEncendidoIndex").style.background="red";
+                </script>
+                <%
+                } else if(ControladorServlet.isConectado()){
+                %>
+                <script>
+                    document.getElementById("botonEncendidoIndex").style.background="green";
+                </script>
+                <%
+                }
+            %>
             <h1>Despacho de Taxis</h1>
             <div id="enlaces">
                 <ul>
@@ -42,7 +59,7 @@
             <input type="hidden" name="nombreCliente" value="<%=solicitud.getNombreCliente()%>"/>
             <input type="hidden" name="destino" value="<%=solicitud.getDireccionDestino()%>"/>
             <input type="hidden" name="telefono" value="<%=solicitud.getTelefono()%>"/>
-            <input type="submit" name="solicitud" onclick="alert('Envio el mensaje');" value="enviarMensaje">
+            <input type="submit" name="solicitud" onclick="alert('Envio el mensaje');" value="Enviar Mensaje">
         </form>
         </div>
 

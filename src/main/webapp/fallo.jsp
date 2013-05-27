@@ -4,6 +4,7 @@
     Author     : andres
 --%>
 
+<%@page import="controlador.ControladorServlet"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -18,6 +19,22 @@
     </head>
     <body>
         <div id="encabezado">
+            <div id="botonEncendidoIndex"></div>
+            <%
+                if(!ControladorServlet.isConectado()){
+                %>
+                <script>
+                    document.getElementById("botonEncendidoIndex").style.background="red";
+                </script>
+                <%
+                } else if(ControladorServlet.isConectado()){
+                %>
+                <script>
+                    document.getElementById("botonEncendidoIndex").style.background="green";
+                </script>
+                <%
+                }
+            %>
             <h1>Despacho de Taxis</h1>
             <div id="enlaces">
                 <ul>
@@ -30,7 +47,7 @@
         <div id="divFallo">
             <h1>Ha habido un fallo en la comunicaci&oacute;n con el Taxi</h1>
             <form action="ControladorServlet">
-                <input onclick="alert('Vuelvo a intentar');" type="submit" value="VolveraIntentar" name="solicitud"/>
+                <input onclick="alert('Vuelvo a intentar');" type="submit" value="Volver a Intentar" name="solicitud"/>
             </form>
         </div>
     </body>

@@ -1,3 +1,4 @@
+<%@page import="controlador.ControladorServlet"%>
 <%@page import="modelo.accesodatos.Taxi"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%
@@ -17,6 +18,22 @@
     </head>
     <body onload="generarMapa('<%= taxi.getUbicacion()%>');">
         <div id="encabezado">
+            <div id="botonEncendidoIndex"></div>
+            <%
+                if(!ControladorServlet.isConectado()){
+                %>
+                <script>
+                    document.getElementById("botonEncendidoIndex").style.background="red";
+                </script>
+                <%
+                } else if(ControladorServlet.isConectado()){
+                %>
+                <script>
+                    document.getElementById("botonEncendidoIndex").style.background="green";
+                </script>
+                <%
+                }
+            %>
             <h1>Despacho de Taxis</h1>
             <div id="enlaces">
                 <ul>

@@ -1,8 +1,10 @@
+<%@page import="controlador.ControladorServlet"%>
 <%
     String estado = (String) request.getAttribute("estado");
     if(estado == null){
     estado = ".";
     }
+    
 %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -18,13 +20,13 @@
         <div id="encabezado">
             <div id="botonEncendidoIndex" onclick="cambiaIndex();"></div>
             <%
-                if(estado.equals("bloqueado")){
+                if(!ControladorServlet.isConectado()){
                 %>
                 <script>
                     document.getElementById("botonEncendidoIndex").style.background="red";
                 </script>
                 <%
-                } else if(estado.equals("abierto")){
+                } else if(ControladorServlet.isConectado()){
                 %>
                 <script>
                     document.getElementById("botonEncendidoIndex").style.background="green";
@@ -39,6 +41,9 @@
                     <li><a href="generarSolicitud.jsp">Crear Solicitud</a></li>
                     <li><a href="descargarHistorial.jsp"> | Descargar Historial</a></li>
                 </ul>
+            </div>
+            <div style="text-align: center; position: absolute; top: 200px; left:40%;">
+                <img src="http://static6.depositphotos.com/1070259/561/v/950/depositphotos_5613932-Button-taxi.jpg" height="300px" width="300px"/>
             </div>
         </div>
     </body>

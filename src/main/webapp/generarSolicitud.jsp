@@ -1,5 +1,4 @@
-<%@taglib prefix="sql" uri="http://java.sun.com/jsp/jstl/sql"%>
-
+<%@page import="controlador.ControladorServlet"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -10,6 +9,22 @@
     </head>
     <body>
         <div id="encabezado">
+            <div id="botonEncendidoIndex"></div>
+            <%
+                if(!ControladorServlet.isConectado()){
+                %>
+                <script>
+                    document.getElementById("botonEncendidoIndex").style.background="red";
+                </script>
+                <%
+                } else if(ControladorServlet.isConectado()){
+                %>
+                <script>
+                    document.getElementById("botonEncendidoIndex").style.background="green";
+                </script>
+                <%
+                }
+            %>
             <h1>Despacho de Taxis</h1>
             <div id="enlaces">
                 <ul>
@@ -22,7 +37,7 @@
                 Nombre: <input type="text" name="Nombre" value="" /><br />
                 Destino: <input type="text" name="Direccion" value="" /><br />
                 Telefono: <input type="text" name="Telefono" value="" /><br />
-                <input type="submit" value="crearSolicitud" name="solicitud"/>
+                <input type="submit" value="Crear Solicitud" name="solicitud"/>
             </form>
         </div>
     </body>
