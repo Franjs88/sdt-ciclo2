@@ -18,6 +18,7 @@ public class FachadaDeSesion {
 
     @PersistenceContext
     private EntityManager em;
+    private List<Solicitud> listaSolicitudes;
 
     public List<Integer> consultaListaTaxis() {
         List<Integer> listaTaxis;
@@ -134,6 +135,17 @@ public class FachadaDeSesion {
     //Metodo para simular la recepcion del mensaje
     public boolean recibirConfirmacion() {
         return Math.random() < 0.5;
+    }
+    
+    //Devuelve el numero de solicitudes
+    public Integer getTotalSolicitudes() {
+        listaSolicitudes = em.createNamedQuery("Solicitud.findAll").getResultList();
+        return listaSolicitudes.size();
+    }
+    
+    //Devuelve la n-esima solicitud
+    public Solicitud getSolicitud(Integer n) {
+        return listaSolicitudes.get(n);
     }
 
     //Genera la lista de los ultimos taxis que han atendido solicitudes
