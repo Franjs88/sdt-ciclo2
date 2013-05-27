@@ -119,16 +119,13 @@ public class FachadaDeSesion {
     public boolean enviarMensaje(Solicitud solicitud, Integer idTaxi) {
         //Envia un mensaje al taxi indicado con la solicitud asignada
 
-        //Obtiene la solicitud
-        //Solicitud solicitud = (Solicitud) em.createNamedQuery("Solicitud.findByIdSolicitud").setParameter("idSolicitud", idSolicitud).getResultList().get(0);
         //Obtiene el taxi
         Taxi taxi = (Taxi) em.createNamedQuery("Taxi.findByNumBastidor").setParameter("numBastidor", idTaxi).getResultList().get(0);
         
         //Adigna el taxi a la solicitud
         solicitud.setTaxiNumBastidor(taxi);
 
-        //Actualiza la BBD
-        //em.persist(solicitud);
+        //Actualiza la BD
         em.merge(solicitud);
 
         return recibirConfirmacion();
