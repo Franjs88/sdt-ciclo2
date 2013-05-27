@@ -131,7 +131,17 @@ public class FachadaDeSesion {
         //em.persist(solicitud);
         em.merge(solicitud);
 
-        return true;
+        return recibirConfirmacion();
+    }
+    
+    //Metodo para simular la recepcion del mensaje
+    public boolean recibirConfirmacion() {
+        return Math.random() < 0.5;
+    }
+    
+    //Metodo para detectar errores de comunicacion
+    public String capturarErrorComunicacion() {
+        return null;
     }
 
     //Genera la lista de los ultimos taxis que han atendido solicitudes
