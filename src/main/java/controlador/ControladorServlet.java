@@ -22,17 +22,15 @@ import modelo.logicanegocio.FachadaDeSesion;
 public class ControladorServlet extends HttpServlet {
 
     @EJB
-    FachadaDeSesion ejb;
-    boolean conectado = true;
-    Taxi taxiOptimo;
-    Solicitud solicitud;
-    
+    private FachadaDeSesion ejb;
+    private boolean conectado = true;
+    private Taxi taxiOptimo;
+    private Solicitud solicitud;
+
     /**
-     * Constructor del Controlador
-     * Revisar si funciona al ejecutar la aplicación.
+     * Constructor del Controlador Revisar si funciona al ejecutar la
+     * aplicación.
      */
-
-
     /**
      * Processes requests for both HTTP
      * <code>GET</code> and
@@ -98,29 +96,40 @@ public class ControladorServlet extends HttpServlet {
             //se manda la información a la vista
             RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/listaTaxis.jsp");
             dispatcher.forward(request, response);
-            
+
         } else if (conectado && peticion.equals("enviarMensaje")) {
             //idsolicitud, idtaxi
             boolean exito = ejb.enviarMensaje(solicitud, taxiOptimo.getNumBastidor());
             if (exito) {
                 RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/index.jsp");
                 dispatcher.forward(request, response);
-            }//else enviar a pagina para que vuelva a intentar
-        }else if(peticion.equals("estadoSistema")){
+            } else {
+                RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/fallo.jsp");
+                dispatcher.forward(request, response);
+            }
+        } else if (peticion.equals("estadoSistemaIndex")) {
             String estado = request.getParameter("estado");
-            if(estado.equals("bloqueado")){
+            if (estado.equals("bloqueado")) {
                 conectado = false;
                 request.setAttribute("estado", estado);
                 RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/index.jsp");
                 dispatcher.forward(request, response);
-            }else if(estado.equals("abierto")){
+            } else if (estado.equals("abierto")) {
                 conectado = true;
                 request.setAttribute("estado", estado);
                 RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/index.jsp");
                 dispatcher.forward(request, response);
             }
-        }
-        else{
+        } else if (peticion.equals("VolveraIntentar")) {
+            boolean exito = ejb.enviarMensaje(solicitud, taxiOptimo.getNumBastidor());
+            if (exito) {
+                RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/index.jsp");
+                dispatcher.forward(request, response);
+            } else {
+                RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/fallo.jsp");
+                dispatcher.forward(request, response);
+            }
+        } else {
             RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/index.jsp");
             dispatcher.forward(request, response);
         }
@@ -166,5 +175,36 @@ public class ControladorServlet extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
-    
+
+    public FachadaDeSesion getEjb() {
+        return ejb;
+    }
+
+    public void setEjb(FachadaDeSesion ejb) {
+        this.ejb = ejb;
+    }
+
+    public boolean isConectado() {
+        return conectado;
+    }
+
+    public void setConectado(boolean conectado) {
+        this.conectado = conectado;
+    }
+
+    public Taxi getTaxiOptimo() {
+        return taxiOptimo;
+    }
+
+    public void setTaxiOptimo(Taxi taxiOptimo) {
+        this.taxiOptimo = taxiOptimo;
+    }
+
+    public Solicitud getSolicitud() {
+        return solicitud;
+    }
+
+    public void setSolicitud(Solicitud solicitud) {
+        this.solicitud = solicitud;
+    }
 }
