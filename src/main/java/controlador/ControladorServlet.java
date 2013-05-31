@@ -1,6 +1,7 @@
 package controlador;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.EJB;
@@ -26,6 +27,7 @@ public class ControladorServlet extends HttpServlet {
     private static boolean conectado = true;
     private Taxi taxiOptimo;
     private Solicitud solicitud;
+
     /**
      * Constructor del Controlador Revisar si funciona al ejecutar la
      * aplicación.
@@ -43,6 +45,7 @@ public class ControladorServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        PrintWriter out = response.getWriter();
         String peticion = request.getParameter("solicitud");
 
         //Si el sistema esta conectado y la petición es CrearSolicitud
@@ -110,15 +113,33 @@ public class ControladorServlet extends HttpServlet {
             String estado = request.getParameter("estado");
             if (estado.equals("bloqueado")) {
                 conectado = false;
-                request.setAttribute("estado", estado);
+                //request.setAttribute("estado", estado);
                 RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/index.jsp");
                 dispatcher.forward(request, response);
             } else if (estado.equals("abierto")) {
                 conectado = true;
-                request.setAttribute("estado", estado);
+                //request.setAttribute("estado", estado);
                 RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/index.jsp");
                 dispatcher.forward(request, response);
             }
+        } else if (conectado && peticion.equals("descargar")) {
+            int tam = ejb.getTotalSolicitudes();
+            try {
+                out.print(tam);
+            } finally {
+                out.close();
+            }
+        } else if (conectado && peticion.equals("escribir")) {
+            String i = request.getParameter("i");
+            response.setContentType("text/html;charset=UTF-8");
+            out = response.getWriter();
+            try {
+                Solicitud sol = ejb.getSolicitud(Integer.valueOf(i));
+                out.print(sol.toString());
+            } finally {
+                out.close();
+            }
+
         } else if (peticion.equals("Volver a Intentar")) {
             boolean exito = ejb.enviarMensaje(solicitud, taxiOptimo.getNumBastidor());
             if (exito) {
@@ -133,7 +154,6 @@ public class ControladorServlet extends HttpServlet {
             dispatcher.forward(request, response);
         }
     }
-    
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**

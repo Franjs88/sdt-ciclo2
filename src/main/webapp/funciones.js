@@ -1,11 +1,9 @@
 function cambiaIndex(){
     
     if(document.getElementById("botonEncendidoIndex").style.background === "red"){
-        //alert("Soy rojo y pase a verde");
         document.getElementById("botonEncendidoIndex").style.background ="green";
         window.location.href = "ControladorServlet?solicitud=estadoSistemaIndex&estado=abierto";
     }else{
-        //alert("Soy verde y pase a rojo");
         document.getElementById("botonEncendidoIndex").style.background ="red";
         window.location.href = "ControladorServlet?solicitud=estadoSistemaIndex&estado=bloqueado";
     }

@@ -146,7 +146,14 @@ public class Solicitud implements Serializable {
 
     @Override
     public String toString() {
-        return "modelo.accesodatos.Solicitud[ idSolicitud=" + idSolicitud + " ]";
+        if (taxiNumBastidor == null){
+            return idSolicitud + " " + nombreCliente + " " + fechaSolicitud +
+                    " " + direccionDestino + " " + telefono + " " + "no hay taxi asignado";
+        }
+        return idSolicitud + " " + nombreCliente + " " + fechaSolicitud +
+                    " " + direccionDestino + " " + telefono + " " + taxiNumBastidor.getNumBastidor();
+   
     }
+    
     
 }

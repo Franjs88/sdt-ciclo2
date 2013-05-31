@@ -16,6 +16,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css" rel="stylesheet">    
         <title>SDT</title>
         <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
         <script src="funciones.js"></script>

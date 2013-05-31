@@ -10,7 +10,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Historial</title>
-        <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+    <div>
         <script src="funciones.js"></script>
         <link rel="stylesheet" type="text/css" href="estilo.css"/>
 
