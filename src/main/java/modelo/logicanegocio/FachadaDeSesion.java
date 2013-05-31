@@ -140,12 +140,28 @@ public class FachadaDeSesion {
     //Devuelve el numero de solicitudes
     public Integer getTotalSolicitudes() {
         listaSolicitudes = em.createNamedQuery("Solicitud.findAll").getResultList();
-        return listaSolicitudes.size();
+        //Comprobamos si la lista esta vacia.
+        return listaSolicitudes == null ? 0 :  listaSolicitudes.size();
     }
     
     //Devuelve la n-esima solicitud
     public Solicitud getSolicitud(Integer n) {
-        return listaSolicitudes.get(n);
+        Solicitud solicitud;
+        //En caso de que no haya solicitudes o el indice no sea correcto.
+        if ((listaSolicitudes == null) || (listaSolicitudes.isEmpty()) || 
+                (n >= listaSolicitudes.size()) || (n < 0)) {
+            solicitud = null;
+        }
+        //Si es la ultima solicitud
+        else if (n == listaSolicitudes.size()-1) {
+            solicitud = listaSolicitudes.get(n);
+            //Eliminamos la asignacion.
+            listaSolicitudes = null;
+        }
+        else {
+            solicitud = listaSolicitudes.get(n);
+        }
+        return solicitud;
     }
 
     //Genera la lista de los ultimos taxis que han atendido solicitudes
