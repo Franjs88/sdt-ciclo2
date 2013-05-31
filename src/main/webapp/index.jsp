@@ -42,7 +42,7 @@
                     <li><a href="descargarHistorial.jsp"> | Descargar Historial</a></li>
                 </ul>
             </div>
-            <div style="text-align: center; position: absolute; top: 200px; left:40%;">
+            <div style="text-align: center; position: absolute; top: 200px; left:38%;">
                 <img src="http://static6.depositphotos.com/1070259/561/v/950/depositphotos_5613932-Button-taxi.jpg" height="300px" width="300px"/>
             </div>
         </div>
