@@ -38,6 +38,7 @@
 
         <script src="funciones.js"></script>
         <link rel="stylesheet" type="text/css" href="estilo.css"/>
+        <script src="funciones.js"></script>
     </head>
     <body>
         <div id="encabezado">
@@ -68,12 +69,14 @@
             <div id="progressBar" style="float: left; margin-right: 10px;"><div> </div></div> 
             <button id="guardar" type="button" class="btn btn-primary" style="float: left;display: none" > Guardar como</button>
             <div>
+                <div id="solicitudes"> </div>
                 <button id="descargar" class="btn btn-success" data-dismiss="modal" aria-hidden="true">Descargar</button>
                 <button id="cancelar" class="btn" data-dismiss="modal" aria-hidden="true">Cancelar</button>
             </div>
+            <div style="clear:both;"> </div>
+        
         </div>
-        <div style="clear:both;"> </div>
-        <div id="solicitudes">  </div>
+        
         <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script> 
         <script type="text/javascript" src="script.js"></script> 
 

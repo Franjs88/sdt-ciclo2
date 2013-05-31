@@ -122,14 +122,14 @@ public class ControladorServlet extends HttpServlet {
                 RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/index.jsp");
                 dispatcher.forward(request, response);
             }
-        } else if (conectado && peticion.equals("descargar")) {
+        } else if (peticion.equals("descargar")) {
             int tam = ejb.getTotalSolicitudes();
             try {
                 out.print(tam);
             } finally {
                 out.close();
             }
-        } else if (conectado && peticion.equals("escribir")) {
+        } else if (peticion.equals("escribir")) {
             String i = request.getParameter("i");
             response.setContentType("text/html;charset=UTF-8");
             out = response.getWriter();

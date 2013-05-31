@@ -89,7 +89,8 @@ function post(i, n) {
         // console.log(data);
         // LA solicitud se debe de obtener de data
         solicitudes[i] = data;
-        progress(((i + 1) / n) * 100, $('#progressBar'));
+        var porcentaje =((i + 1) / n) * 100;
+        progress(parseInt(porcentaje), $('#progressBar'));
 
         setTimeout(function() {
             post(i + 1, n);
