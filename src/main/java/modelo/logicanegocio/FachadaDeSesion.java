@@ -23,7 +23,7 @@ public class FachadaDeSesion {
     public List<Integer> consultaListaTaxis() {
         List<Integer> listaTaxis;
         //Devuelve la lista de identificadores de los taxis de la BBDD
-            listaTaxis = (List<Integer>) em.createNamedQuery("Taxi.findAllByNumBastidor").getResultList();
+        listaTaxis = (List<Integer>) em.createNamedQuery("Taxi.findAllByNumBastidor").getResultList();
         return listaTaxis;
     }
 
@@ -44,7 +44,7 @@ public class FachadaDeSesion {
         Date fecha = new Date();
         Solicitud solicitud = new Solicitud(nombre, direccion, telefono, fecha.toString());
         em.persist(solicitud);
-        
+
         return solicitud;
     }
 
@@ -60,6 +60,7 @@ public class FachadaDeSesion {
 
         //Taxi al que se le va a enviar el mensaje
         Integer taxiCandidato = null;
+        Integer taxiOptimo = null;
 
         boolean libre;
         int i;
@@ -71,15 +72,16 @@ public class FachadaDeSesion {
             libre = false;
             while (i < numTaxis && !libre) {
                 taxiCandidato = listaTaxis.get(i);
-                if (consultaEstadoTaxi(taxiCandidato).equals("disponible")) {
+                if (consultaEstadoTaxi(taxiCandidato).equalsIgnoreCase("disponible")) {
                     libre = true;
+                    taxiOptimo = taxiCandidato;
                 } else {
                     i++;
                 }
             }
             //En caso de que no encuentre ningun taxi disponible
             if (libre == false) {
-                taxiCandidato = null;
+                taxiOptimo = null;
             }
 
         } else if ((numTaxis > 0) && (numSolicitudes > 0)) {
@@ -94,8 +96,9 @@ public class FachadaDeSesion {
                 while (i < numTaxis && taxisCandidatos.size() < numTaxis && !libre) {
                     taxiCandidato = listaTaxis.get(i);
                     //Busca el taxi que no haya atendido ninguna solicitud y este libre
-                    if (!estaEnLista(taxisCandidatos, taxiCandidato) && consultaEstadoTaxi(taxiCandidato).equals("disponible")) {
+                    if (!estaEnLista(taxisCandidatos, taxiCandidato) && (consultaEstadoTaxi(taxiCandidato).equals("disponible"))) {
                         libre = true;
+                        taxiOptimo = taxiCandidato;
                     } else {
                         i++;
                     }
@@ -105,8 +108,9 @@ public class FachadaDeSesion {
                 i = taxisCandidatos.size() - 1;
                 while (i >= 0 && !libre) {
                     taxiCandidato = listaTaxis.get(i);
-                    if (consultaEstadoTaxi(taxiCandidato).equals("disponible")) {
+                    if (consultaEstadoTaxi(taxiCandidato).equalsIgnoreCase("disponible")) {
                         libre = true;
+                        taxiOptimo = taxiCandidato;
                     } else {
                         i--;
                     }
@@ -114,7 +118,7 @@ public class FachadaDeSesion {
             }
         }
 
-        return taxiCandidato;
+        return taxiOptimo;
     }
 
     public boolean enviarMensaje(Solicitud solicitud, Integer idTaxi) {
@@ -122,43 +126,51 @@ public class FachadaDeSesion {
 
         //Obtiene el taxi
         Taxi taxi = (Taxi) em.createNamedQuery("Taxi.findByNumBastidor").setParameter("numBastidor", idTaxi).getResultList().get(0);
-        
-        //Adigna el taxi a la solicitud
-        solicitud.setTaxiNumBastidor(taxi);
 
-        //Actualiza la BD
-        em.merge(solicitud);
+        boolean respuesta = recibirConfirmacion();
 
-        return recibirConfirmacion();
+        if (respuesta) {
+            //Asigna el taxi a la solicitud
+            solicitud.setTaxiNumBastidor(taxi);
+
+            //Actualiza la información del taxi
+            taxi.setEstado("ocupado");
+            taxi.setDestino(solicitud.getDireccionDestino());
+
+            //Actualiza la BD
+            em.merge(solicitud);
+            em.merge(taxi);
+        }
+
+
+        return respuesta;
     }
-    
+
     //Metodo para simular la recepcion del mensaje
     public boolean recibirConfirmacion() {
         return Math.random() < 0.5;
     }
-    
+
     //Devuelve el numero de solicitudes
     public Integer getTotalSolicitudes() {
         listaSolicitudes = em.createNamedQuery("Solicitud.findAll").getResultList();
         //Comprobamos si la lista esta vacia.
-        return listaSolicitudes == null ? 0 :  listaSolicitudes.size();
+        return listaSolicitudes == null ? 0 : listaSolicitudes.size();
     }
-    
+
     //Devuelve la n-esima solicitud
     public Solicitud getSolicitud(Integer n) {
         Solicitud solicitud;
         //En caso de que no haya solicitudes o el indice no sea correcto.
-        if ((listaSolicitudes == null) || (listaSolicitudes.isEmpty()) || 
-                (n >= listaSolicitudes.size()) || (n < 0)) {
+        if ((listaSolicitudes == null) || (listaSolicitudes.isEmpty())
+                || (n >= listaSolicitudes.size()) || (n < 0)) {
             solicitud = null;
-        }
-        //Si es la ultima solicitud
-        else if (n == listaSolicitudes.size()-1) {
+        } //Si es la ultima solicitud
+        else if (n == listaSolicitudes.size() - 1) {
             solicitud = listaSolicitudes.get(n);
             //Eliminamos la asignacion.
             listaSolicitudes = null;
-        }
-        else {
+        } else {
             solicitud = listaSolicitudes.get(n);
         }
         return solicitud;
@@ -172,10 +184,10 @@ public class FachadaDeSesion {
         while (numTaxis > 0 && numSolicitudes > 0) {
             taxiCandidato = listaSolicitudes.get(numSolicitudes - 1).getNumBastidor();
             //Añade el taxi si no esta repetido
-            if (!estaEnLista(taxisCandidatos, taxiCandidato)) {
+            if ((!estaEnLista(taxisCandidatos, taxiCandidato)) && (consultaEstadoTaxi(taxiCandidato).equalsIgnoreCase("disponible"))) {
                 taxisCandidatos.add(taxiCandidato);
-                numTaxis--;
             }
+            numTaxis--;
             numSolicitudes--;
         }
         return taxisCandidatos;
