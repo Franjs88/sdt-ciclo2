@@ -100,6 +100,7 @@ public class ControladorServlet extends HttpServlet {
             dispatcher.forward(request, response);
 
         } else if (conectado && peticion.equals("Enviar Mensaje")) {
+            //Se envía el mensaje al taxi
             //idsolicitud, idtaxi
             boolean exito = ejb.enviarMensaje(solicitud, taxiOptimo.getNumBastidor());
             if (exito) {
@@ -110,6 +111,7 @@ public class ControladorServlet extends HttpServlet {
                 dispatcher.forward(request, response);
             }
         } else if (peticion.equals("estadoSistemaIndex")) {
+            //Se cambia el estado del sistema
             String estado = request.getParameter("estado");
             if (estado.equals("bloqueado")) {
                 conectado = false;
@@ -123,6 +125,7 @@ public class ControladorServlet extends HttpServlet {
                 dispatcher.forward(request, response);
             }
         } else if (peticion.equals("descargar")) {
+            //Se descargan las solicitudes
             int tam = ejb.getTotalSolicitudes();
             try {
                 out.print(tam);
@@ -130,6 +133,7 @@ public class ControladorServlet extends HttpServlet {
                 out.close();
             }
         } else if (peticion.equals("escribir")) {
+            //Se escriben las solicitudes a un fichero
             String i = request.getParameter("i");
             response.setContentType("text/html;charset=UTF-8");
             out = response.getWriter();
@@ -141,6 +145,7 @@ public class ControladorServlet extends HttpServlet {
             }
 
         } else if (peticion.equals("Volver a Intentar")) {
+            //Se vuelva a mandar un mensaje cuando haya un error en la comunicación como el taxi
             boolean exito = ejb.enviarMensaje(solicitud, taxiOptimo.getNumBastidor());
             if (exito) {
                 RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/index.jsp");
@@ -209,7 +214,7 @@ public class ControladorServlet extends HttpServlet {
     }
 
     public void setConectado(boolean conectado) {
-        conectado = conectado;
+        this.conectado = conectado;
     }
 
     public Taxi getTaxiOptimo() {

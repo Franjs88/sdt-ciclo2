@@ -17,7 +17,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css" rel="stylesheet">    
-        <title>SDT</title>
+        <title>Taxis</title>
         <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
         <script src="funciones.js"></script>
         <link rel="stylesheet" type="text/css" href="estilo.css"/>
@@ -46,7 +46,7 @@
                 <ul>
                     <li><a href="index.jsp">Inicio</a></li>
                     <li><a href="generarSolicitud.jsp">| Crear Solicitud</a></li>
-                    <li><a href="descargarHistorial.jsp"> | Descargar Historial</a></li>
+                    <li><a href="testDescarga.jsp"> | Descargar Historial</a></li>
                 </ul>
             </div>
         </div>

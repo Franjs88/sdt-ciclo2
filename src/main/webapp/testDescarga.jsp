@@ -11,6 +11,7 @@
     <head>
         <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css" rel="stylesheet">    
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"> 
+        <title>Descargar Historial</title>
         <style type="text/css">	
             #divDescargar{
                 position:absolute;

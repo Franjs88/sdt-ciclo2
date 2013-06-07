@@ -60,7 +60,7 @@
             <input type="hidden" name="nombreCliente" value="<%=solicitud.getNombreCliente()%>"/>
             <input type="hidden" name="destino" value="<%=solicitud.getDireccionDestino()%>"/>
             <input type="hidden" name="telefono" value="<%=solicitud.getTelefono()%>"/>
-            <input type="submit" name="solicitud" onclick="alert('Envio el mensaje');" value="Enviar Mensaje">
+            <input type="submit" name="solicitud" onclick="alert('Envío el mensaje');" value="Enviar Mensaje">
         </form>
         </div>
 
