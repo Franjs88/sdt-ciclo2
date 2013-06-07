@@ -39,9 +39,9 @@
             <div id="enlaces">
                 <ul>
                     <li><a href="index.jsp">Inicio</a></li>
-                    <li> | </li>
-                    <li><a href="generarSolicitud.jsp">Crear Solicitud</a></li>
-                </ul>
+                    <li id="comolink" onclick="obtenerTaxis();">| Ver Taxis</li>
+                    <li><a href="generarSolicitud.jsp">| Crear Solicitud</a></li>
+                </ul> 
             </div>
         </div>
         <div id="infotaxi">

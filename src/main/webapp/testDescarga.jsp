@@ -68,7 +68,7 @@
         </div>
         <div id="divDescargar">
             <div id="progressBar" style="float: left; margin-right: 10px;"><div> </div></div> 
-            <button id="guardar" type="button" class="btn btn-primary" style="float: left;display: none" > Guardar como</button>
+            <button id="guardar" type="button" class="btn btn-primary" style="float: left;display: none" > Guardar</button>
             <div>
                 <div id="solicitudes"> </div>
                 <button id="descargar" class="btn btn-success" data-dismiss="modal" aria-hidden="true">Descargar</button>

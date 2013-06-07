@@ -115,12 +115,10 @@ public class ControladorServlet extends HttpServlet {
             String estado = request.getParameter("estado");
             if (estado.equals("bloqueado")) {
                 conectado = false;
-                //request.setAttribute("estado", estado);
                 RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/index.jsp");
                 dispatcher.forward(request, response);
             } else if (estado.equals("abierto")) {
                 conectado = true;
-                //request.setAttribute("estado", estado);
                 RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/index.jsp");
                 dispatcher.forward(request, response);
             }
